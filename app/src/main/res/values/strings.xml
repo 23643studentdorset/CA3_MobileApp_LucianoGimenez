@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CA3_MobileApp_LucianoGimenez</string>
+    <string name="following">following</string>
+    <string name="followers">followers</string>
+</resources>
