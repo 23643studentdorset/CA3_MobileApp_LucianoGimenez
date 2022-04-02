@@ -2,4 +2,7 @@
     <string name="app_name">CA3_MobileApp_LucianoGimenez</string>
     <string name="following">following</string>
     <string name="followers">followers</string>
+    <string name="orgname">Organization</string>
+    <string name="username">User</string>
+    <string name="search">Search</string>
 </resources>

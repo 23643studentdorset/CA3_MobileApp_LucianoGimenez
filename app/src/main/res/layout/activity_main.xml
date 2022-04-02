@@ -5,10 +5,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/background"
+    android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recycler_view"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:id="@+id/input"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="@color/text"/>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radio_group">
+        <RadioButton
+            android:id="@+id/user_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/username"
+            android:textStyle="bold"
+            android:textColor="@color/text"
+            android:layout_marginTop="50dp"
+            android:checked="true"/>
+            <!--android:onClick="onRadioButtonClicked"/>-->
+        <RadioButton
+            android:id="@+id/organization_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/orgname"
+            android:textStyle="bold"
+            android:textColor="@color/text"/>
+            <!--android:onClick="onRadioButtonClicked"/>-->
+    </RadioGroup>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_button"
+        android:text="@string/search"
+        android:backgroundTint="@color/button"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"/>
 </LinearLayout>

@@ -12,4 +12,5 @@
     <color name="background">#0d1117</color>
     <color name="border">#54585e</color>
     <color name="ht">#58a6ff</color>
+    <color name="button">#2d3239</color>
 </resources>

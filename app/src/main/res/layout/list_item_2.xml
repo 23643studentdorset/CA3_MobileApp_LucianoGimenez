@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/ht"
             android:layout_gravity="left"
-            android:text="linux"
+            tools:text="linux"
             android:layout_weight="0.85"
             android:textStyle="bold"/>
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/visibility"
             android:layout_gravity="center_vertical"
-            android:text="public"
+            tools:text="public"
             android:layout_weight="0.15"
             android:textColor="@color/text2"
             android:textStyle="bold"/>
@@ -37,51 +37,57 @@
         android:paddingTop="10dp"
         android:id="@+id/description"
         android:textColor="@color/text2"
-        android:text="Linux kernel source tree"/>
+        tools:text="Linux kernel source tree"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingVertical="10dp">
+
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/ic_baseline_circle_24"
-            android:tint="@color/text2"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
             android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_baseline_circle_24"
+            android:layout_marginEnd="5dp"
+            android:tint="@color/text2"
             tools:ignore="UseAppTint" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/language"
-            android:text="C"
+            tools:text="C"
             android:textColor="@color/text2"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:layout_marginEnd="3dp"/>
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_baseline_star_24"
-            app:tint="@color/text2"/>
+            app:tint="@color/text2"
+            android:layout_marginEnd="3dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/stargazers_count"
-            android:text="129539"
+            tools:text="129539"
             android:textColor="@color/text2"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:layout_marginEnd="3dp"/>
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/github"
             android:layout_gravity="center_vertical"
-            app:tint="@color/text2" />
+            app:tint="@color/text2"
+            android:layout_marginEnd="3dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/forks_count"
-            android:text="129539"
+            tools:text="129539"
             android:textColor="@color/text2"
             android:textSize="16sp"/>
     </LinearLayout>
