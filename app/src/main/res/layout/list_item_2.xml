@@ -16,6 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/name"
             android:textColor="@color/ht"
             android:layout_gravity="left"
             tools:text="linux"
@@ -31,13 +32,15 @@
             android:textColor="@color/text2"
             android:textStyle="bold"/>
     </LinearLayout>
+
     <TextView
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:id="@+id/description"
         android:textColor="@color/text2"
-        tools:text="Linux kernel source tree"/>
+        tools:text="Linux kernel source tree" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,13 +57,13 @@
             tools:ignore="UseAppTint" />
 
         <TextView
+            android:id="@+id/language"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/language"
-            tools:text="C"
+            android:layout_marginEnd="3dp"
             android:textColor="@color/text2"
             android:textSize="16sp"
-            android:layout_marginEnd="3dp"/>
+            tools:text="C" />
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -83,13 +86,14 @@
             android:layout_gravity="center_vertical"
             app:tint="@color/text2"
             android:layout_marginEnd="3dp"/>
+
         <TextView
+            android:id="@+id/forks_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/forks_count"
-            tools:text="129539"
             android:textColor="@color/text2"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            tools:text="129539" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
