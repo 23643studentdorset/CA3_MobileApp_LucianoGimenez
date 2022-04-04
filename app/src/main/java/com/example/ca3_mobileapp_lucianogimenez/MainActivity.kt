@@ -4,21 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 
 class MainActivity : AppCompatActivity() {
+
+    private var option = "users"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        lateinit var option: String
-
-
-
-        if (findViewById<RadioButton>(R.id.organization_button).isChecked){
-            option = "orgs"
-        }else{
-            option = "users"
-        }
 
         val buttonClick = findViewById<Button>(R.id.search_button)
         buttonClick.setOnClickListener {
@@ -35,4 +29,31 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    fun onRadioButtonClicked(view: View) {
+        if (view is RadioButton) {
+            // Is the button now checked?
+            val checked = view.isChecked
+            // Check which radio button was clicked
+            when (view.getId()) {
+                R.id.user_button ->
+                    if (checked) {
+                        val button = findViewById<RadioButton>(R.id.user_button)
+                        button.setOnClickListener(View.OnClickListener() {
+                            option = "users"
+                            println(option)
+                        })
+                    }
+                R.id.organization_button ->
+                    if (checked) {
+                        val buttonSecond = findViewById<RadioButton>(R.id.organization_button)
+                        buttonSecond.setOnClickListener(View.OnClickListener() {
+                            option = "orgs"
+                            println(option)
+                        })
+                    }
+            }
+        }
+    }
+
 }

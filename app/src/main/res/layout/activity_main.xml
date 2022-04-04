@@ -30,16 +30,16 @@
             android:textStyle="bold"
             android:textColor="@color/text"
             android:layout_marginTop="50dp"
-            android:checked="true"/>
-            <!--android:onClick="onRadioButtonClicked"/>-->
+            android:checked="true"
+            android:onClick="onRadioButtonClicked"/>
         <RadioButton
             android:id="@+id/organization_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/orgname"
             android:textStyle="bold"
-            android:textColor="@color/text"/>
-            <!--android:onClick="onRadioButtonClicked"/>-->
+            android:textColor="@color/text"
+            android:onClick="onRadioButtonClicked"/>
     </RadioGroup>
     <Button
         android:layout_width="wrap_content"

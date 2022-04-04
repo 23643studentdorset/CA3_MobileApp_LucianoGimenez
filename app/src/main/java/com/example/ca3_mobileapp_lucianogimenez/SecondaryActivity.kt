@@ -26,7 +26,7 @@ class SecondaryActivity : AppCompatActivity() {
         val input = bundle?.getString("user_input")
         val option = bundle?.getString("radio_option")
 
-        //println("option: $option")
+        println("option: $option")
         //println("input: $input")
 
         newRecyclerView = findViewById(R.id.recycler_view)
@@ -46,28 +46,29 @@ class SecondaryActivity : AppCompatActivity() {
 
             @SuppressLint("UseCompatLoadingForDrawables")
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body?.string()
-                //println(body)
-                val gson = GsonBuilder().create()
-                val userData = gson.fromJson(body, UserData::class.java)
-                //println(userData)
-                runOnUiThread {
-                    val avatarPhoto = findViewById<ImageView>(R.id.photo)
-                    val avatarUrl = userData.avatar_url
-                    Picasso.get()
-                        .load(avatarUrl)
-                        .error(getDrawable(ic_baseline_error_outline_24)!!)
-                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-                        .into(avatarPhoto)
-                    findViewById<TextView>(R.id.user_name).text = userData.name
-                    findViewById<TextView>(R.id.login).text = userData.login
-                    findViewById<TextView>(R.id.followers).text = formatNum(userData.followers)
-                    findViewById<TextView>(R.id.following).text = formatNum(userData.following)
-                    findViewById<TextView>(R.id.company).text = userData.company
-                    findViewById<TextView>(R.id.location).text = userData.location
+                if (response.isSuccessful) {
+                    val body = response.body?.string()
+                    //println(body)
+                    val gson = GsonBuilder().create()
+                    val userData = gson.fromJson(body, UserData::class.java)
+                    //println(userData)
+                    runOnUiThread {
+                        val avatarPhoto = findViewById<ImageView>(R.id.photo)
+                        val avatarUrl = userData.avatar_url
+                        Picasso.get()
+                            .load(avatarUrl)
+                            .error(getDrawable(ic_baseline_error_outline_24)!!)
+                            .memoryPolicy(MemoryPolicy.NO_CACHE)
+                            .into(avatarPhoto)
+                        findViewById<TextView>(R.id.user_name).text = userData.name
+                        findViewById<TextView>(R.id.login).text = userData.login
+                        findViewById<TextView>(R.id.followers).text = formatNum(userData.followers)
+                        findViewById<TextView>(R.id.following).text = formatNum(userData.following)
+                        findViewById<TextView>(R.id.company).text = userData.company
+                        findViewById<TextView>(R.id.location).text = userData.location
+                    }
                 }
             }
-
             override fun onFailure(call: Call, e: IOException) {
                 println("failed to execute")
             }
@@ -83,19 +84,19 @@ class SecondaryActivity : AppCompatActivity() {
             newCall(request).enqueue(object : Callback {
 
                 override fun onFailure(call: Call, e: IOException) {
-                    println("no repos")
+                    println("no repos?")
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val body = response.body?.string()
-                    //println("repos:$body")
-
-                    val gson = GsonBuilder().create()
-                    val userRepoData = gson.fromJson(body, RepoList::class.java)
-                    runOnUiThread{
-                        newRecyclerView.adapter = Adapter(userRepoData)
+                    if (response.isSuccessful) {
+                        val body = response.body?.string()
+                        //println("repos:$body")
+                        val gson = GsonBuilder().create()
+                        val userRepoData = gson.fromJson(body, RepoList::class.java)
+                        runOnUiThread {
+                            newRecyclerView.adapter = Adapter(userRepoData)
+                        }
                     }
-
                 }
 
             })
