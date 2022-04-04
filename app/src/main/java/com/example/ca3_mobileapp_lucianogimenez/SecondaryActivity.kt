@@ -2,8 +2,10 @@ package com.example.ca3_mobileapp_lucianogimenez
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,14 +28,14 @@ class SecondaryActivity : AppCompatActivity() {
         val input = bundle?.getString("user_input")
         val option = bundle?.getString("radio_option")
 
-        println("option: $option")
+        //println("option: $option")
         //println("input: $input")
 
         newRecyclerView = findViewById(R.id.recycler_view)
         newRecyclerView.layoutManager = LinearLayoutManager(this)
 
         fetchJsonData(input!!,option!!)
-        fetchJsonRepos(input!!,option!!)
+        fetchJsonRepos(input, option)
 
     }
 
@@ -67,10 +69,13 @@ class SecondaryActivity : AppCompatActivity() {
                         findViewById<TextView>(R.id.company).text = userData.company
                         findViewById<TextView>(R.id.location).text = userData.location
                     }
+                }else {
+                    //Toast.makeText(this,"there is no $option called $input", Toast.LENGTH_LONG).show()
+                    Log.i("lucho", "data failed")
                 }
             }
             override fun onFailure(call: Call, e: IOException) {
-                println("failed to execute")
+                Log.i("lucho", "data failed")
             }
         })
     }
@@ -84,7 +89,7 @@ class SecondaryActivity : AppCompatActivity() {
             newCall(request).enqueue(object : Callback {
 
                 override fun onFailure(call: Call, e: IOException) {
-                    println("no repos?")
+                    Log.i("lucho", "repos failed")
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -96,7 +101,10 @@ class SecondaryActivity : AppCompatActivity() {
                         runOnUiThread {
                             newRecyclerView.adapter = Adapter(userRepoData)
                         }
+                    }else {
+                        Log.i("lucho", "repos failed")
                     }
+
                 }
 
             })

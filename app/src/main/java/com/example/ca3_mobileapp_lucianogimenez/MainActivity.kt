@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         val buttonClick = findViewById<Button>(R.id.search_button)
         buttonClick.setOnClickListener {
-            Log.i("lucho", findViewById<EditText>(R.id.input).text.toString())
+            //Log.i("lucho", findViewById<EditText>(R.id.input).text.toString())
             if (findViewById<EditText>(R.id.input).text.toString() != "") {
                 val userInput = findViewById<EditText>(R.id.input).text.toString()
                 val intent = Intent(this, SecondaryActivity::class.java)
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                         val button = findViewById<RadioButton>(R.id.user_button)
                         button.setOnClickListener(View.OnClickListener() {
                             option = "users"
-                            println(option)
+                            //println(option)
                         })
                     }
                 R.id.organization_button ->
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                         val buttonSecond = findViewById<RadioButton>(R.id.organization_button)
                         buttonSecond.setOnClickListener(View.OnClickListener() {
                             option = "orgs"
-                            println(option)
+                            //println(option)
                         })
                     }
             }
