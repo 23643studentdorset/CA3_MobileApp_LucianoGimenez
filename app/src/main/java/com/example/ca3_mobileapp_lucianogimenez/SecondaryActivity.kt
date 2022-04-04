@@ -28,9 +28,13 @@ class SecondaryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_item)
 
+        newRecyclerView = findViewById(R.id.recycler_view)
+        newRecyclerView.layoutManager = LinearLayoutManager(this)
+
         fetchJsonData()
+        fetchJsonRepos()
 
-
+        /*
         nameInfo = arrayOf("linux","test-tlb","subsurface-for-dirk")
         visibilityInfo = arrayOf("Public", "Public", "Public")
         descriptionInfo = arrayOf("Linux kernel source tree","Stupid memory latency and TB tester","Do not use - the real upstream is Subsurface-divelog/subsurface")
@@ -48,10 +52,10 @@ class SecondaryActivity : AppCompatActivity() {
         }
 
         newRecyclerView.adapter = Adapter(newArrayList)
+        */
     }
 
     fun fetchJsonData() {
-        println("fetching JSON")
         val url = "https://api.github.com/users/torvalds"
         val request = Request.Builder().url(url).build()
 
@@ -97,6 +101,34 @@ class SecondaryActivity : AppCompatActivity() {
             }
         }
         return string
+    }
+
+    fun fetchJsonRepos() {
+        val url = "https://api.github.com/users/torvalds/repos"
+        val request = Request.Builder().url(url).build()
+
+        val client = OkHttpClient()
+        client.run {
+            newCall(request).enqueue(object : Callback {
+
+                override fun onFailure(call: Call, e: IOException) {
+                    println("no repos")
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val body = response.body?.string()
+                    println("repos:$body")
+
+                    val gson = GsonBuilder().create()
+                    val userRepoData = gson.fromJson(body, RepoList::class.java)
+                    runOnUiThread{
+                        newRecyclerView.adapter = Adapter(userRepoData)
+                    }
+
+                }
+
+            })
+        }
     }
 }
 
