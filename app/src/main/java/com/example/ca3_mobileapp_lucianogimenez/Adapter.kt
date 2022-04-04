@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 class Adapter (private val repoList : ArrayList<Repos>):RecyclerView.Adapter<CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val layoutInflater = LayoutInflater.from(parent?.context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.list_item_2, parent, false)
         return CustomViewHolder(cellForRow)
     }
@@ -21,8 +21,8 @@ class Adapter (private val repoList : ArrayList<Repos>):RecyclerView.Adapter<Cus
         holder.visibility.text = currentItem.visibility
         holder.description.text = currentItem.description
         holder.language.text = currentItem.language
-        holder.stargazers_count.text = currentItem.stargazers_count.toString()
-        holder.forks_count.text = currentItem.forks_count.toString()
+        holder.stargazersCount.text = formatNum(currentItem.stargazers_count)
+        holder.forksCount.text = formatNum(currentItem.forks_count)
     }
 
     override fun getItemCount(): Int {
@@ -31,13 +31,29 @@ class Adapter (private val repoList : ArrayList<Repos>):RecyclerView.Adapter<Cus
 
 }
 
-class CustomViewHolder(val view: View):RecyclerView.ViewHolder(view){
+class CustomViewHolder(private val view: View):RecyclerView.ViewHolder(view){
     val name: TextView = itemView.findViewById(R.id.name)
     val visibility: TextView = itemView.findViewById(R.id.visibility)
     val description: TextView = itemView.findViewById(R.id.description)
     val language: TextView = itemView.findViewById(R.id.language)
-    val stargazers_count: TextView = itemView.findViewById(R.id.stargazers_count)
-    val forks_count: TextView = itemView.findViewById(R.id.forks_count)
+    val stargazersCount: TextView = itemView.findViewById(R.id.stargazers_count)
+    val forksCount: TextView = itemView.findViewById(R.id.forks_count)
 
 
 }
+fun formatNum(num: Int?): String {
+    var string = ""
+    if (num != null){
+        if (num > 1000)  {
+            string += (num / 1000).toString()
+            string += "k"
+        }else{
+            string += num.toString()
+        }
+    }
+    return string
+}
+
+
+
+
