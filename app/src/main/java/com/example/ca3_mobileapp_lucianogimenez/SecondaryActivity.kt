@@ -1,7 +1,9 @@
 package com.example.ca3_mobileapp_lucianogimenez
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -69,27 +71,48 @@ class SecondaryActivity : AppCompatActivity() {
                         findViewById<TextView>(R.id.company).text = userData.company
                         findViewById<TextView>(R.id.location).text = userData.location
                     }
-                }else {
-                    //Toast.makeText(this,"there is no $option called $input", Toast.LENGTH_LONG).show()
-                    Log.i("lucho", "data failed")
                 }
             }
             override fun onFailure(call: Call, e: IOException) {
-                Log.i("lucho", "data failed")
+                Log.i("lucho", "$e")
+                //findViewById<ImageView>(R.id.photo).setImageResource(R.drawable.error)
             }
         })
     }
 
     private fun fetchJsonRepos(input: String, option: String) {
+        //repos
         val url = "https://api.github.com/$option/$input/repos"
         val request = Request.Builder().url(url).build()
+        /*
+        //colors
+        val url2 = "https://raw.githubusercontent.com/ozh/github-colors/master/colors.json"
+        val request2 = Request.Builder().url(url2).build()
+        val client2 = OkHttpClient()
+        client2.run {
+            newCall(request2).enqueue(object: Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    Log.i("lucho", "$e")
+                }
 
+                override fun onResponse(call: Call, response: Response) {
+                    val body = response.body?.string()
+                    println("color:$body")
+                    runOnUiThread {
+
+                    }
+                }
+            }
+                )}
+
+     */
         val client = OkHttpClient()
         client.run {
             newCall(request).enqueue(object : Callback {
 
                 override fun onFailure(call: Call, e: IOException) {
-                    Log.i("lucho", "repos failed")
+                    Log.i("lucho", "$e")
+
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -99,10 +122,8 @@ class SecondaryActivity : AppCompatActivity() {
                         val gson = GsonBuilder().create()
                         val userRepoData = gson.fromJson(body, RepoList::class.java)
                         runOnUiThread {
-                            newRecyclerView.adapter = Adapter(userRepoData)
+                            newRecyclerView.adapter = Adapter(userRepoData, this@SecondaryActivity)
                         }
-                    }else {
-                        Log.i("lucho", "repos failed")
                     }
 
                 }
@@ -120,5 +141,6 @@ class SecondaryActivity : AppCompatActivity() {
         }
         return string
     }
+
 }
 
