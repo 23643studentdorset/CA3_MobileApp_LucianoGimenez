@@ -1,9 +1,17 @@
 package com.example.ca3_mobileapp_lucianogimenez
 
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.GsonBuilder
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.Picasso
+import okhttp3.*
+import java.io.IOException
+import java.text.NumberFormat
 
 class SecondaryActivity : AppCompatActivity() {
 
@@ -19,6 +27,9 @@ class SecondaryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_item)
+
+        fetchJsonData()
+
 
         nameInfo = arrayOf("linux","test-tlb","subsurface-for-dirk")
         visibilityInfo = arrayOf("Public", "Public", "Public")
@@ -38,4 +49,54 @@ class SecondaryActivity : AppCompatActivity() {
 
         newRecyclerView.adapter = Adapter(newArrayList)
     }
+
+    fun fetchJsonData() {
+        println("fetching JSON")
+        val url = "https://api.github.com/users/torvalds"
+        val request = Request.Builder().url(url).build()
+
+        val client = OkHttpClient()
+        client.newCall(request).enqueue(object : Callback {
+
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body?.string()
+                //println(body)
+                val gson = GsonBuilder().create()
+                val userData = gson.fromJson(body, UserData::class.java)
+                //println(userData)
+                runOnUiThread {
+                    val avatar_photo = findViewById<ImageView>(R.id.photo)
+                    val avatar_url = userData.avatar_url
+                    Picasso.get()
+                        .load(avatar_url)
+                        .error(getDrawable(R.drawable.ic_baseline_error_outline_24)!!)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .into(avatar_photo)
+                    findViewById<TextView>(R.id.user_name).text = userData.name
+                    findViewById<TextView>(R.id.login).text = userData.login
+                    findViewById<TextView>(R.id.followers).text = formatNum(userData.followers)
+                    findViewById<TextView>(R.id.following).text = formatNum(userData.following)
+                    findViewById<TextView>(R.id.company).text = userData.company
+                    findViewById<TextView>(R.id.location).text = userData.location
+                }
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                println("failled to execute")
+            }
+        })
+    }
+    fun formatNum(num: Int?): String {
+        var string = ""
+        if (num != null){
+            if (num > 1000)  {
+                string += (num / 1000).toString()
+                string += "k"
+            }else{
+                string += num.toString()
+            }
+        }
+        return string
+    }
 }
+
